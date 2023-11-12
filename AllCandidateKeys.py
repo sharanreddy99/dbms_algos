@@ -63,12 +63,12 @@ def findAllCandidateKeys(f, R):
 
 if __name__ == "__main__":     
     #4A
-    # f = set([('B', 'CE'), ('E', 'FH'), ('BC', 'H'), ('CD', 'A'), ('A', 'DG'), ('H', 'BCE'), ('H', 'G')])
-    # R = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    f = set([('B', 'CE'), ('E', 'FH'), ('BC', 'H'), ('CD', 'A'), ('A', 'DG'), ('H', 'BCE'), ('H', 'G')])
+    R = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
     #4B
-    f = set([('AB', 'C'), ('CD', 'F'), ('F', 'A'), ('CE', 'D')])
-    R = ['A', 'B', 'C', 'D', 'E', 'F']
+    # f = set([('AB', 'C'), ('CD', 'F'), ('F', 'A'), ('CE', 'D')])
+    # R = ['A', 'B', 'C', 'D', 'E', 'F']
 
     # Lecture Example
     # f = set([('DF', 'C'), ('BC', 'F'), ('E', 'A'), ('ABC', 'E')])

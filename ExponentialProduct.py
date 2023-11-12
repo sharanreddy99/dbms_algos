@@ -55,4 +55,6 @@ if __name__ == "__main__":
     f = set([('A', 'B')])
     R = ['A', 'B', 'C']
     rPowerSet = getPowerSet(R)
-    print(printAll(findFDs(f, R, rPowerSet)))
+    countFds = findFDs(f, R, rPowerSet)
+    printAll(countFds)
+    print('Count => ',len(countFds))
