@@ -47,7 +47,11 @@ def customCompare(x, y):
             return 1
 
 def getPowerSet(R):
-    return list(sorted(tuple(chain.from_iterable(combinations(R, x) for x in range(1, len(R)+1))), key=cmp_to_key(customCompare)))
+    res = list(sorted(tuple(chain.from_iterable(combinations(R, x) for x in range(1, len(R)+1)))))
+    res = [tuple(sorted(val)) for val in res]
+    res = list(sorted(res, key=cmp_to_key(customCompare)))
+    return res
+    
 
 def printRound(roundNumber, roundName, f):
     print('Round ',roundNumber, roundName)
