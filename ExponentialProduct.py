@@ -1,23 +1,4 @@
-from re import L
-from itertools import chain, combinations
-
-def getPowerSet(R):
-    return chain.from_iterable(combinations(R, x) for x in range(1, len(R)+1))
-
-def printRound(roundNumber, roundName, f):
-    print('Round ',roundNumber, roundName)
-    for tup in f:
-        u, v = tup
-        print(u, '->', v)
-    print('number of FDs', len(f))
-    print()
-
-def printAll(f):
-    s = ''
-    for tup in f:
-        u, v = tup
-        s += ' %s -> %s,'%(u, v)
-    return s
+from Utils import *
 
 
 def findFDs(f, R, rPowerSet):

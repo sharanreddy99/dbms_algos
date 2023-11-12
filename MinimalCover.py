@@ -1,36 +1,7 @@
 from ExponentialProduct import printAll
+from Utils import *
 
 
-def printFD(oldFD, newFD, f, closure = None):
-    print('oldFD', oldFD)
-    print('newFD', newFD)
-    if closure is not None:
-        print('Closure', closure)
-    for tup in f:
-        u, v = tup
-        print(u, '->', v)
-    print()
-
-
-def getStringFromSet(s):
-    return "".join(list(sorted(s)))
-
-
-def computeClosure(fd, closure):
-    changed = True
-    while changed:
-        changed = False
-
-        for tup in fd:
-            left, right = tup
-            left = set(left)
-            right = set(right)
-
-            if left.issubset(closure) and not right.issubset(closure):
-                closure.update(right)
-                changed = True
-
-    return closure
 
 def findMinimalCover(f, R, char):
 
@@ -116,7 +87,7 @@ def findMinimalCover(f, R, char):
         Fc = set()
         while True:
             Fc = f.copy()
-            for tup1 in Fc:
+            for tup1 in H:
                 A, B = tup1
                 G = set()
                 X = set()
@@ -138,22 +109,20 @@ def findMinimalCover(f, R, char):
 
 if __name__ == "__main__":     
     #3A
-    #f = set([('A', 'B'), ('AB', 'C'), ('BC', 'DE'), ('AC', 'E'), ('DE', 'F')])
-    #R = ['A', 'B', 'C', 'D', 'E', 'F']
-    #5B
+    f = set([('A', 'B'), ('AB', 'C'), ('BC', 'DE'), ('AC', 'E'), ('DE', 'F')])
+    R = ['A', 'B', 'C', 'D', 'E', 'F']
+    char = 'b'
 
     #3B
     # f = set([('A', 'BC'), ('B', 'CDE'), ('C', 'E'), ('AD', 'BCE'), ('E', 'D')])
     # R = ['A', 'B', 'C', 'D', 'E']
-    #5A
+    #char = 'a'
 
     #3C
     f = set([('AB', 'C'), ('C', 'A'), ('BC', 'D'), ('ACD', 'B'), ('D', 'EG'), ('BE', 'C'), ('CG', 'BD'), ('CE', 'G')])
     R = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    #5B
+    #char = 'b'
 
-    # char = input('Enter step: a or b? ')
-    char = 'a'
 
     resFd = findMinimalCover(f, R, char)
     printAll(resFd)
