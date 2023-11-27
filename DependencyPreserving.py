@@ -52,4 +52,4 @@ if __name__ == "__main__":
 	RSet = [['A','B', 'C', 'D'], ['A','B', 'D', 'F']]
 	R = list('ABCDEF')
 	print('Hence the following decomposition is', ('preserving' if dependencyPreserving(f, RSet, R) else 'not preserving'))
-
+	
