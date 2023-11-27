@@ -20,7 +20,7 @@ def BCNFDecomposition(f, R, char):
     X, Y = fd
     print('{0} => {1} is not in BCNF due to {2} -> {3}'.format(char,getStringFromSet(R), X, Y))
     xClosure = computeClosure(f, set(X))
-    print('Closure of X =>', getStringFromSet(xClosure))
+    print('Closure of {0} => {1}'.format(X, getStringFromSet(xClosure)))
 
     R1 = xClosure
     R2 = set(X).union(set(R) - xClosure)
@@ -28,8 +28,8 @@ def BCNFDecomposition(f, R, char):
     f1 = FDRestriction(f, list(getStringFromSet(R1)))
     f2 = FDRestriction(f, list(getStringFromSet(R2)))
 
-    print('{0}1({1}) => ({2})'.format(char, getStringFromSet(R1), getPrintMap(f1, {val: val for val in getStringFromSet(R1)}, None, True)))
-    print('{0}2({1}) => ({2})\n\n'.format(char, getStringFromSet(R2), getPrintMap(f2, {val: val for val in getStringFromSet(R2)}, None, True)))
+    print('{0}1({1}) => ({2})'.format(char, getStringFromSet(R1), ', '.join(getPrintMap(f1, {val: val for val in getStringFromSet(R1)}, None, True))))
+    print('{0}2({1}) => ({2})\n\n'.format(char, getStringFromSet(R2), ', '.join(getPrintMap(f2, {val: val for val in getStringFromSet(R2)}, None, True))))
     del DecompositionMap[getStringFromSet(R)]
     DecompositionMap[getStringFromSet(R1)] = f1
     DecompositionMap[getStringFromSet(R2)] = f2
@@ -38,8 +38,8 @@ def BCNFDecomposition(f, R, char):
     BCNFDecomposition(f2, list(getStringFromSet(R2)), char + '2')
 
 if __name__ == "__main__":     
-    f = set([('A', 'BCDEFGHIJ'), ('D', 'ABCDEFGHIJ'), ('EFI', 'G'), ('EI', 'H'), ('I', 'J'), ('G', 'EI')])
-    R = list('ABCDEFGHIJ')
+    f = set([('AB', 'CD'), ('D', 'E'), ('A', 'C'), ('B', 'D')])
+    R = list('ABCDE')
     DecompositionMap[getStringFromSet(R)] = f
     BCNFDecomposition(f, R, 'R')
     print(DecompositionMap)
