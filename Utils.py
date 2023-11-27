@@ -29,10 +29,8 @@ def printFD(oldFD, newFD, f, closure = None):
     print('oldFD', oldFD)
     print('newFD', newFD)
     if closure is not None:
-        print('Closure', closure)
-    for tup in f:
-        u, v = tup
-        print(u, '->', v)
+        print('Closure', getStringFromSet(closure))
+    print('Updated FDs => ( {0} )'.format(', '.join(['%s -> %s'%(u, v) for u,v in f])))
     print()
 
 def customCompare(x, y):
