@@ -28,6 +28,6 @@ def check3NF(f, R):
     return True 
 
 if __name__ == "__main__":     
-    f = set([('AB', 'C'), ('C', 'B')])
-    R = ['A', 'B', 'C', 'D']
+    f = set([('A', 'C'), ('CE', 'AD'), ('CD', 'E')])
+    R = list('ACDE')
     print(check3NF(f, R))
