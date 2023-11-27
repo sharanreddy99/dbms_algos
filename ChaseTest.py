@@ -89,7 +89,7 @@ if __name__ == "__main__":
     # f = list([('A', 'B'), ('BC', 'D'), ('E', 'C'), ('D', 'A'), ('D', 'E'), ('C', 'F')])
     # RSet = [['A','C'], ['A','B', 'D'], ['D','E','F'], ['C', 'F']]
     # R = list('ABCDEF')
-    f = list([('A', 'B'), ('A', 'C'), ('A', 'D'), ('B', 'D')])
-    RSet = [['A','B'], ['B', 'C'],['C','D']]
-    R = list('ABCD')
+    f = list([('A', 'C'), ('B', 'C'), ('C', 'D'), ('DE', 'C'), ('CE', 'A')])
+    RSet = [['A','D'], ['A', 'B'],['B','E'], ['C', 'D', 'E'], ['A', 'E']]
+    R = list('ABCDE')
     print(chaseTest(f, RSet, R))
