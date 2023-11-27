@@ -22,7 +22,7 @@ def printMap(f, map, char):
 	print()
 
 def printSetMap(s, map):
-	print('{',','.join([map[char] for char in list(sorted(list(s)))]) + '}')
+	print('{',','.join([map[char] for char in list(sorted(list(s)))]),'}')
 
 
 def ThreeNFSynthesis(f, R, isPrint = True):
@@ -74,7 +74,7 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 			i += 1
 	
 	if not found:
-		FSet.append('')
+		FSet.append([])
 		RSet.append(set(K[0]))
 
 	vis = [False for i in range(len(RSet))]
@@ -97,16 +97,16 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 	return res1, res2
 
 if __name__ == "__main__":     
-	f = set([('A', 'BCDEFG'), ('D', 'A'), ('EFG', 'H'), ('EG','I'),('G','J'), ('H', 'EG')])
-	map = {'A': 'persid', 'B': 'name', 'C': 'rank', 'D': 'room', 'E': 'city', 'F': 'street', 'G': 'state', 'H': 'zipcode', 'I': 'area-code', 'J': 'government'}
+	# f = set([('A', 'BCDEFG'), ('D', 'A'), ('EFG', 'H'), ('EG','I'),('G','J'), ('H', 'EG')])
+	# map = {'A': 'persid', 'B': 'name', 'C': 'rank', 'D': 'room', 'E': 'city', 'F': 'street', 'G': 'state', 'H': 'zipcode', 'I': 'area-code', 'J': 'government'}
 
-	# print('Original Map')
-	# printMap(f, map, 'f')
-	
-	R = list('ABCDEFGHIJ')
+	f = set([('A', 'BC'), ('CD', 'AE'), ('ABD', 'CD'), ('CE','AD')])
+	map = {val: val for val in 'ABCDE'}
+	R = list('ABCDE')
+
 	res1, res2 = ThreeNFSynthesis(f, R)
 
-	print('\nFinal Result: ')
+	print('\nStep 5: ')
 	for i in range(len(res1)):
 		print('R%s => '%(i + 1),end='')
 		printSetMap(res1[i], map)
