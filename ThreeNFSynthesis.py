@@ -156,9 +156,9 @@ if __name__ == "__main__":
 	# f = set([('A', 'BCDEFG'), ('D', 'A'), ('EFG', 'H'), ('EG','I'),('G','J'), ('H', 'EG')])
 	# map = {'A': 'persid', 'B': 'name', 'C': 'rank', 'D': 'room', 'E': 'city', 'F': 'street', 'G': 'state', 'H': 'zipcode', 'I': 'area-code', 'J': 'government'}
 
-	f = set([('A', 'BC'), ('CD', 'AE'), ('ABD', 'CD'), ('CE','AD')])
-	map = {val: val for val in 'ABCDE'}
-	R = list('ABCDE')
+	f = set([('P', 'LCA'), ('LC', 'AP'), ('A', 'C')])
+	map = {val: val for val in 'ACLP'}
+	R = list('ACLP')
 
 	res1, res2 = ThreeNFSynthesis(f, R)
 
