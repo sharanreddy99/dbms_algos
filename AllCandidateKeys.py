@@ -75,8 +75,8 @@ def findAllCandidateKeys(f, R, isPrint = True):
 
 if __name__ == "__main__":     
     #4A
-    f = set([('B', 'CE'), ('E', 'FH'), ('BC', 'H'), ('CD', 'A'), ('A', 'DG'), ('H', 'BCE'), ('H', 'G')])
-    R = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    f = set([('CD', 'AE'), ('A', 'C'), ('CE', 'D')])
+    R = list('ACDE')
 
     #4B
     # f = set([('AB', 'C'), ('CD', 'F'), ('F', 'A'), ('CE', 'D')])
