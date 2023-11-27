@@ -1,15 +1,24 @@
 from AllCandidateKeys import findAllCandidateKeys
 from MinimalCover import findMinimalCover
+from ThreeNFSynthesis import getPrintMap
 from Utils import *
 
-def FDRestriction(f, S):
+def FDRestriction(f, S, isPrint =True):
     Fs = set()
     for X in getPowerSet(S):
         xClosure = computeClosure(f, set(X)).intersection(S)
         if set(X).issubset(xClosure) and set(X) != xClosure:
+            if isPrint:
+                print('{0} ⊂ {1}'.format(getStringFromSet(X), getStringFromSet(xClosure)))
             Fs.update([(getStringFromSet(X), getStringFromSet(xClosure - set(X)))])
-    
-    Fc = findMinimalCover(Fs, S, None, False)
+        else:
+            if isPrint:
+                print('{0} ⊄ {1}'.format(getStringFromSet(X), getStringFromSet(xClosure)))
+
+    if isPrint:
+        print('Fs => ({0})\n'.format(', '.join(getPrintMap(Fs, {val: val for val in S}, None, True))))
+        print('Minimal Cover:\n--------------')
+    Fc = findMinimalCover(Fs, S, None, isPrint)
     return Fc
 
 
