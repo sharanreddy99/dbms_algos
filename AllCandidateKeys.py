@@ -32,8 +32,8 @@ def findAllCandidateKeys(f, R, isPrint = True):
         print('Step-5: Closure of',getStringFromSet(combineStep1Step2R),'is', getStringFromSet(computeClosure(f, combineStep1Step2R)))
     if setR == computeClosure(f, combineStep1Step2R):
         if isPrint:
-            print('CandidateKeys fetched =>  ', combineStep1Step2R)
-        return combineStep1Step2R
+            print('CandidateKeys fetched =>  ', getStringFromSet(combineStep1Step2R))
+        return [getStringFromSet(combineStep1Step2R)]
     else:
         resCandidateSet = set()
         # Step 6

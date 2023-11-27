@@ -23,11 +23,12 @@ def check3NF(f, R):
         set_Y = set(Y)
         for A in set_Y - set_X:
             if A not in PrimeAttributes:
+                print('for {0}->{1}, {2} is not in the set of prime attributes {3}'.format(X, Y, 'Y-X: {0}'.format(A), getStringFromSet(PrimeAttributes)))
                 return False
     
     return True 
 
 if __name__ == "__main__":     
-    f = set([('A', 'C'), ('CE', 'AD'), ('CD', 'E')])
-    R = list('ACDE')
+    f = set([('AB', 'CDE'), ('CD', 'ABE'), ('E', 'D')])
+    R = list('ABCDE')
     print(check3NF(f, R))
