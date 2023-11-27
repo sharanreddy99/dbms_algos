@@ -3,13 +3,14 @@ from Utils import *
 
 
 
-def findMinimalCover(f, R, char):
+def findMinimalCover(f, R, char, isPrint=True):
 
     # Step 1
     Fc = f.copy()
 
     # Step 2 - Left Reduction
-    print('left Reduction')
+    if isPrint:
+        print('left Reduction')
     while True:
         Fc = f.copy()
         for tup in Fc:
@@ -20,7 +21,8 @@ def findMinimalCover(f, R, char):
                     f.add((getStringFromSet(set(A) - set(a)), B))
 
                     if Fc != f:
-                        printFD((A,B),(getStringFromSet(set(A) - set(a)), B), f, computeClosure(Fc, set(A) - set(a)))
+                        if isPrint:
+                            printFD((A,B),(getStringFromSet(set(A) - set(a)), B), f, computeClosure(Fc, set(A) - set(a)))
                         break
                 
             if Fc != f:
@@ -30,7 +32,8 @@ def findMinimalCover(f, R, char):
             break
 
     # Step 3 - Right Reduction
-    print('\nRight Reduction')
+    if isPrint:
+        print('\nRight Reduction')
     while True:
         Fc = f.copy()
         for tup in Fc:
@@ -44,7 +47,8 @@ def findMinimalCover(f, R, char):
                     f.add((A, getStringFromSet(set(B) - set(b))))
                 
                     if Fc != f:
-                        printFD((A,B),(A, getStringFromSet(set(B) - set(b))), f, computeClosure(newFc, set(A)))
+                        if isPrint:
+                            printFD((A,B),(A, getStringFromSet(set(B) - set(b))), f, computeClosure(newFc, set(A)))
                         break
             if Fc != f:
                 break
@@ -53,7 +57,8 @@ def findMinimalCover(f, R, char):
             break
 
     # Step 4 - If empty RHS, remove them
-    print('Eliminating empty Fi')
+    if isPrint:
+        print('Eliminating empty Fi')
     while True:
         Fc = f.copy()
         for tup in Fc:
@@ -63,10 +68,12 @@ def findMinimalCover(f, R, char):
                     
         if Fc == f:
             break
-    printAll(f)
+    if isPrint:
+        printAll(f)
 
     if char == 'a':
-        print('Standard or Decomposition Rule')
+        if isPrint:
+            print('Standard or Decomposition Rule')
         # Step 5a - standard form or decommposition
         while True:
             Fc = f.copy()
@@ -81,7 +88,8 @@ def findMinimalCover(f, R, char):
             if Fc == f:
                 break
     else:
-        print('Non Standard or Union Rule')
+        if isPrint:
+            print('Non Standard or Union Rule')
         # Step 5b - non standard form or union
         H = f.copy()
         Fc = set()

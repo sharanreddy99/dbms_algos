@@ -1,7 +1,7 @@
 from Utils import *
 
 
-def findFDs(f, R, rPowerSet):
+def findFDs(f, R, rPowerSet, isPrint = True):
     idx = 1
 
     while True:
@@ -16,7 +16,8 @@ def findFDs(f, R, rPowerSet):
                 u, v = tup
                 for j in range(len(v)):
                     f.add((u, v[: j + 1]))
-        printRound(idx, 'Reflexivity Rule', f - oldF)
+        if isPrint:
+            printRound(idx, 'Reflexivity Rule', f - oldF)
 
         temp1F = f.copy()     
         # augmentation rule
@@ -27,7 +28,8 @@ def findFDs(f, R, rPowerSet):
                 newV = "".join(list(sorted(set(v).union(set(augTuple)))))
                 f.add((newU, newV))
 
-        printRound(idx, 'Augmentation Rule', f - temp1F)
+        if isPrint:
+            printRound(idx, 'Augmentation Rule', f - temp1F)
 
         tempF = f.copy()  
         for tup1 in tempF:
@@ -40,7 +42,8 @@ def findFDs(f, R, rPowerSet):
                 if r1 == l2:
                     f.add((l1, r2))
         
-        printRound(idx, 'Transitivity Rule', f - tempF)
+        if isPrint:
+            printRound(idx, 'Transitivity Rule', f - tempF)
 
         if f == oldF:
             break
