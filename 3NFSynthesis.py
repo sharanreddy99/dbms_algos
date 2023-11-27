@@ -29,12 +29,12 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 	# step 1
 	min_cover = findMinimalCover(f, R, 'b', False)
 	if isPrint:
-		print('Step 1')
+		print('Step 1: Minimal cover generation')
 		printMap(min_cover, map, 'f')
 
 	# step 2
 	if isPrint:
-		print('\nStep 2')
+		print('\nStep 2: Generation of relation schemas')
 	RSet = []
 	FSet = []
 	idx = 1
@@ -58,6 +58,7 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 		idx += 1
 		
 	# step 3
+	print('Step 3: Check if schema contains a candidate key')
 	K = list(findAllCandidateKeys(min_cover, R, False))
 	i = 0
 	found = False
@@ -77,6 +78,8 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 		FSet.append([])
 		RSet.append(set(K[0]))
 
+	# Step 4
+	print('Step 4: Test for containment relationships between schemas')
 	vis = [False for i in range(len(RSet))]
 	for i in range(len(RSet)):
 		for j in range(len(RSet)):
@@ -106,7 +109,7 @@ if __name__ == "__main__":
 
 	res1, res2 = ThreeNFSynthesis(f, R)
 
-	print('\nStep 5: ')
+	print('\nStep 5: Return the decomposition')
 	for i in range(len(res1)):
 		print('R%s => '%(i + 1),end='')
 		printSetMap(res1[i], map)
