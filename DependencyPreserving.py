@@ -19,9 +19,7 @@ def dependencyPreserving(f, RSet, R, isPrint = True):
 			for customR in RSet:
 				if isPrint:
 					printSet('Old Result => ', result)
-					printSet('R%s => '%(idx), customR)
 					printSet('Result ∩ R%s => '%(idx),result.intersection(customR))
-					printSet('Closure => ', computeClosure(f, result.intersection(customR)))
 					printSet('Closure ∩ R%s => '%(idx),computeClosure(f, result.intersection(customR)).intersection(customR))
 				C = computeClosure(f, result.intersection(customR)).intersection(customR)
 				result.update(C)
@@ -40,7 +38,7 @@ def dependencyPreserving(f, RSet, R, isPrint = True):
 		print()
 		printSet('Y => ', set(Y))
 		printSet('result => ', result)
-		printSet('Y ∩ result => ', result)
+		printSet('Y ∩ result => ', set(Y).intersection(set(result)))
 		if set(Y).intersection(result) != set(Y):
 			print('FD: %s->%s is not preserved.'%(X,Y))
 			return False

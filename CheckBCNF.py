@@ -13,8 +13,8 @@ def checkBCNF(f, R):
     return None 
 
 if __name__ == "__main__":     
-    f = set([('AB', 'CDE'), ('CD', 'ABE'), ('E', 'D')])
-    R = list('ABCDE')
+    f = set([('CD', 'E'), ('CE', 'AD')])
+    R = list('ACDE')
     
     res = checkBCNF(f, R)
     print(True if res == None else False)

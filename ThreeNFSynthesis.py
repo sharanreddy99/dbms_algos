@@ -1,3 +1,4 @@
+from matplotlib.font_manager import json_load
 from AllCandidateKeys import findAllCandidateKeys
 from MinimalCover import findMinimalCover
 from Utils import *
@@ -72,26 +73,48 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 	RSet = []
 	FSet = []
 	idx = 1
+	globalSet = {}
 	for X, Y in min_cover:
 		RSet.append(set(X).union(set(Y)))
-		if isPrint:
-			print('R%s => '%(idx), getStringFromSet(RSet[-1]))
-
+		
 		currF = []
 		for A, B in min_cover:
 			D = set(B).intersection(RSet[-1])
 			temp = RSet[-1].intersection(D)
 			if (set(A).issubset(RSet[-1]) or set(A) == RSet[-1]) and len(D) > 0 and D == set(B).intersection(RSet[-1]):
-				currF.append((A, getStringFromSet(D)))
-
+				if A in globalSet and len(globalSet[A]) < len(D):
+					for i in range(len(FSet)):
+						setIdx = -1
+						for j in range(len(FSet[i])):
+							if FSet[i][j][0] == A and FSet[i][j][1] == globalSet[A]:
+								setIdx = j
+								break
+						
+						if setIdx != -1:
+							FSet[i].pop(setIdx)
+					globalSet[A] = getStringFromSet(D)
+					currF.append((A, getStringFromSet(D)))
+				elif A not in globalSet:
+					globalSet[A] = getStringFromSet(D)
+					currF.append((A, getStringFromSet(D)))
+					
 		if len(currF) > 0:
 			FSet.append(currF)
-			if isPrint:
-				print('F{0} => ( {1} )'.format(idx,', '.join(getPrintMap(currF, map, None, True))))
-				print()
-
+		else:
+			RSet[-1] = set()
+			
 		idx += 1
-		
+
+	RSet = list(filter(lambda x: len(x) != 0, RSet))
+	
+	if isPrint:
+		idx = 1
+		for currF in FSet:
+			print('R%s => '%(idx), getStringFromSet(RSet[idx - 1]))
+			print('F{0} => ( {1} )'.format(idx,', '.join(getPrintMap(currF, map, None, True))))
+			print()
+			idx += 1
+
 	# step 3
 	if isPrint:
 		print('Step 3: Check if schema contains a candidate key')
@@ -127,28 +150,28 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 				print('F%s: '%(idx))
 				printMap(currF, map, None, True)
 
-
-
 	# Step 4
 	if isPrint:
 		print('\nStep 4: Test for containment relationships between schemas')
-	vis = [False for i in range(len(RSet))]
+	resSet = {getStringFromSet(RSet[i]): FSet[i] for i in range(len(RSet))}
 	for i in range(len(RSet)):
 		for j in range(len(RSet)):
 			if i == j:
 				continue
-				
-			if RSet[i].issubset(RSet[j]) or RSet[i] == RSet[j]:
-				vis[i] = True
+			
+			if RSet[j].issubset(RSet[i]):
+				key = getStringFromSet(RSet[i])
+				resSet[key] = resSet.get(key, FSet[i])
+				resSet[key] = list(set(resSet[key]).union(set(FSet[j])))
+				if getStringFromSet(RSet[j]) in resSet:
+					del resSet[getStringFromSet(RSet[j])]
 				if isPrint:
 					print('R%s is a subset of R%s'%(i + 1, j  + 1))
-				break
 	
 	res1, res2 = [], []
-	for i in range(len(RSet)):
-		if not vis[i]:
-			res1.append(RSet[i])
-			res2.append(FSet[i])
+	for key in resSet:
+			res1.append(set(key))
+			res2.append(resSet[key])
 	
 	return res1, res2
 
@@ -156,13 +179,13 @@ if __name__ == "__main__":
 	# f = set([('A', 'BCDEFG'), ('D', 'A'), ('EFG', 'H'), ('EG','I'),('G','J'), ('H', 'EG')])
 	# map = {'A': 'persid', 'B': 'name', 'C': 'rank', 'D': 'room', 'E': 'city', 'F': 'street', 'G': 'state', 'H': 'zipcode', 'I': 'area-code', 'J': 'government'}
 
-	f = set([('A', 'D'), ('B', 'C')])
-	map = {val: val for val in 'ABCD'}
-	R = list('ABCD')
+	f = set([('A', 'BC'), ('CD', 'AE'), ('ABD', 'CD'), ('CE', 'AD')])
+	R = list('ABCDE')
+	map = {val: val for val in R}
 
 	res1, res2 = ThreeNFSynthesis(f, R)
 
-	print('\nStep 5: Return the decomposition')
+	print('\nStep 5: The resulting decompositions are: ')
 	for i in range(len(res1)):
 		print('R%s => '%(i + 1),end='')
 		printSetMap(res1[i], map, True)

@@ -58,7 +58,7 @@ def findMinimalCover(f, R, char, isPrint=True):
 
     # Step 4 - If empty RHS, remove them
     if isPrint:
-        print('Eliminating empty Fi')
+        print('Eliminating empty RHS')
     while True:
         Fc = f.copy()
         for tup in Fc:

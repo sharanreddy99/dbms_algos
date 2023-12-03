@@ -25,10 +25,10 @@ def BCNFDecomposition(f, R, char):
     R1 = xClosure
     R2 = set(X).union(set(R) - xClosure)
 
-    print('FD Restriction for f{0}:\n--------------------'.format(char[1:] + '1'))
+    print('FD Restriction for f{0} using R{1}: {2}\n--------------------'.format(char[1:] + '1', char[1:] + '1', getStringFromSet(R1)))
     f1 = FDRestriction(f, list(getStringFromSet(R1)))
     print('{0}1({1}) => ({2})\n'.format(char, getStringFromSet(R1), ', '.join(getPrintMap(f1, {val: val for val in getStringFromSet(R1)}, None, True))))
-    print('FD Restriction for f{0}:\n--------------------'.format(char[1:] + '2'))
+    print('FD Restriction for f{0} using R{1}: {2}\n--------------------'.format(char[1:] + '2', char[1:] + '2', getStringFromSet(R2)))
     f2 = FDRestriction(f, list(getStringFromSet(R2)))
     print('{0}2({1}) => ({2})\n\n'.format(char, getStringFromSet(R2), ', '.join(getPrintMap(f2, {val: val for val in getStringFromSet(R2)}, None, True))))
 
@@ -40,6 +40,7 @@ def BCNFDecomposition(f, R, char):
     BCNFDecomposition(f2, list(getStringFromSet(R2)), char + '2')
 
 def printDecompositionMap(d):
+    print('The decompositions are: ')
     idx = 1
     for key in d:
         print('R{0} => {1}\nF{2} => ({3})\n'.format(idx, key,idx,', '.join(getPrintMap(d[key], {val: val for val in key}, None, True))))
@@ -47,7 +48,7 @@ def printDecompositionMap(d):
     
 
 if __name__ == "__main__":     
-    f = set([('AB', 'CDE'), ('CD', 'ABE'), ('E', 'D')])
+    f = set([('AB', 'CD'), ('D', 'E'), ('A', 'C'), ('B', 'D')])
     R = list('ABCDE')
     DecompositionMap[getStringFromSet(R)] = f
     BCNFDecomposition(f, R, 'R')
