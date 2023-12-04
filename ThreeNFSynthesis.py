@@ -80,24 +80,8 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 		currF = []
 		for A, B in min_cover:
 			D = set(B).intersection(RSet[-1])
-			temp = RSet[-1].intersection(D)
 			if (set(A).issubset(RSet[-1]) or set(A) == RSet[-1]) and len(D) > 0 and D == set(B).intersection(RSet[-1]):
-				if A in globalSet and len(globalSet[A]) < len(D):
-					for i in range(len(FSet)):
-						setIdx = -1
-						for j in range(len(FSet[i])):
-							if FSet[i][j][0] == A and FSet[i][j][1] == globalSet[A]:
-								setIdx = j
-								break
-						
-						if setIdx != -1:
-							FSet[i].pop(setIdx)
-					globalSet[A] = getStringFromSet(D)
-					currF.append((A, getStringFromSet(D)))
-				elif A not in globalSet:
-					globalSet[A] = getStringFromSet(D)
-					currF.append((A, getStringFromSet(D)))
-					
+				currF.append((A, getStringFromSet(D)))
 		if len(currF) > 0:
 			FSet.append(currF)
 		else:
@@ -170,9 +154,18 @@ def ThreeNFSynthesis(f, R, isPrint = True):
 	
 	res1, res2 = [], []
 	for key in resSet:
-			res1.append(set(key))
-			res2.append(resSet[key])
-	
+		newFD = {}
+		for fd in resSet[key]:
+			newFD[fd[0]] = newFD.get(fd[0], set())
+			newFD[fd[0]].update(set(fd[1]))
+		
+		listFD = []
+		for x in newFD:
+			listFD.append((x, getStringFromSet(newFD[x])))
+		
+		res1.append(set(key))
+		res2.append(listFD)
+
 	return res1, res2
 
 if __name__ == "__main__":     

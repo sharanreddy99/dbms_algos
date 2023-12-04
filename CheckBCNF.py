@@ -13,7 +13,7 @@ def checkBCNF(f, R):
     return None 
 
 if __name__ == "__main__":     
-    f = set([('CD', 'E'), ('CE', 'AD')])
+    f = set([('CD', 'E'), ('CE', 'AD'), ('A', 'C')])
     R = list('ACDE')
     
     res = checkBCNF(f, R)

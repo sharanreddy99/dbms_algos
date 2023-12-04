@@ -48,8 +48,8 @@ def printDecompositionMap(d):
     
 
 if __name__ == "__main__":     
-    f = set([('AB', 'CD'), ('D', 'E'), ('A', 'C'), ('B', 'D')])
-    R = list('ABCDE')
+    f = set([('CD', 'E'), ('CE', 'AD'), ('A', 'C')])
+    R = list('ACDE')
     DecompositionMap[getStringFromSet(R)] = f
     BCNFDecomposition(f, R, 'R')
     printDecompositionMap(DecompositionMap)
