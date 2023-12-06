@@ -28,7 +28,7 @@ const App = () => {
 
   const runCode = async () => {
     const resp = await axios.post(
-      import.meta.env.VITE_DBMS_CODES_BACKEND_URL + "/run_algo",
+      import.meta.env.VITE_DBMS_ALGOS_BACKEND_URL + "/run_algo",
       data
     );
 

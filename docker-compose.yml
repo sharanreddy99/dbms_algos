@@ -1,29 +1,29 @@
 version: "3.9"
 services:
   react:
-    container_name: dbms_codes_frontend
+    container_name: dbms_algos_frontend
     build:
       context: ./frontend
     environment:
-      VITE_DBMS_CODES_BACKEND_URL: ${DBMS_CODES_BACKEND_URL}
+      VITE_DBMS_ALGOS_BACKEND_URL: ${DBMS_ALGOS_BACKEND_URL}
     volumes:
       - ./frontend:/app/frontend
       - /app/frontend/node_modules
     ports:
-      - ${DBMS_CODES_FRONTEND_PORT}:3000
+      - ${DBMS_ALGOS_FRONTEND_PORT}:3000
 
   flask:
-    container_name: dbms_codes_backend
+    container_name: dbms_algos_backend
     build:
       context: ./backend
     env_file: .env
     volumes:
       - ./backend/:/app/backend
     ports:
-      - ${DBMS_CODES_BACKEND_PORT}:5000
+      - ${DBMS_ALGOS_BACKEND_PORT}:5000
 
   nginx:
-    container_name: dbms_codes_nginx
+    container_name: dbms_algos_nginx
     depends_on:
       - flask
       - react
@@ -32,4 +32,4 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - ${DBMS_CODES_NGINX_PORT}:80
+      - ${DBMS_ALGOS_NGINX_PORT}:80
