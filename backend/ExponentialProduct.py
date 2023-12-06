@@ -14,8 +14,10 @@ def findFDs(f, R, rPowerSet, isPrint = True):
             # reflexivity rule
             for tup in oldF:
                 u, v = tup
-                for j in range(len(v)):
-                    f.add((u, v[: j + 1]))
+                for pSet in getPowerSet(list(v)):
+                    if set(pSet).issubset(set(u)):
+                        f.add((u, getStringFromSet(pSet)))
+
         if isPrint:
             printRound(idx, 'Reflexivity Rule', f - oldF)
 

@@ -46,8 +46,8 @@ def dependencyPreserving(f, RSet, R, isPrint = True):
 	return True
 
 if __name__ == "__main__":     
-	f = set([('A', 'B'), ('BC', 'D'), ('E', 'C'), ('D','A'), ('B','D')])
-	RSet = [['A','B', 'C', 'D'], ['A','B', 'D', 'F']]
-	R = list('ABCDEF')
+	f = set([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D','B')])
+	RSet = [['A','B'], ['B', 'C'],['B','D']]
+	R = list('ABCD')
 	print('Hence the following decomposition is', ('preserving' if dependencyPreserving(f, RSet, R) else 'not preserving'))
 	

@@ -24,6 +24,7 @@ def FDRestriction(f, S, isPrint =True):
 
 
 if __name__ == "__main__":     
-    f = set([('CD', 'E'), ('B', 'C'), ('AB', 'CDE')])
-    R = list('ABDE')
+    #f = set([('CD', 'E'), ('B', 'C'), ('AB', 'CDE')])
+    f = set([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D','B')])
+    R = list('BD')
     print(FDRestriction(f, R))
