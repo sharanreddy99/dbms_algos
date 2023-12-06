@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-import re
 import sys
+import os
 
 from MinimalCover import findMinimalCover
 from AllCandidateKeys import findAllCandidateKeys
@@ -36,10 +36,13 @@ def healthcheck():
 @app.route("/run_algo", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def run_algo():
-    
     fp = changeStdOut()
 
     data = request.get_json()
+    if os.getenv('DBMS_CODES_PASSWORD') != data['password']:
+        return 'Cannot run this algorithm'
+    
+
     f = set(map(lambda x: tuple(x.split(data['sideSeparator'])), data['f'].split(data['fdSeparator'])))
     R = list(data['R'])
     RSet = list(map(lambda x: list(x), data['RSet'].split(data['fdSeparator'])))

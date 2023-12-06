@@ -1,5 +1,5 @@
-import { Button, Grid } from "@mui/material";
-import React, { useState } from "react";
+import { Button, Grid, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import SelectDropdown from "./components/SelectDropdown/SelectDropdown";
 import Parameters from "./components/Parameters/Parameters";
 import axios from "axios";
@@ -13,7 +13,15 @@ const App = () => {
     fdSeparator: ",",
     sideSeparator: ".",
     char: "a",
+    password: "",
   };
+
+  useEffect(() => {
+    const password = localStorage.getItem("password");
+    if (password) {
+      setData({ ...data, password: password });
+    }
+  }, []);
 
   const [data, setData] = useState(defaultData);
   const [result, setResult] = useState([]);
@@ -36,6 +44,20 @@ const App = () => {
       margin={1}
       width={"99%"}
     >
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          required
+          id="password"
+          name="password"
+          label="password"
+          value={data.password}
+          onChange={(e) => {
+            setData({ ...data, password: e.target.value });
+            localStorage.setItem("password", e.target.value);
+          }}
+        />
+      </Grid>
       <Grid item xs={12}>
         <SelectDropdown data={data} setData={setData} />
       </Grid>
