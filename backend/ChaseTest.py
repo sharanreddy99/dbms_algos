@@ -12,7 +12,7 @@ def areMatricesSame(mat1, mat2):
     
     return True
 
-def iterative(matrix, f):
+def iterative(matrix, f, R):
     isSecondTimeUnchanged = None
     idx = 1
     while True:
@@ -61,7 +61,7 @@ def iterative(matrix, f):
                 return new_matrix
     
         
-def printMatrix(matrix):
+def printMatrix(matrix, R=[]):
     print('\t'.join(R))
     for row in matrix:
         print('\t'.join(row))
@@ -80,9 +80,9 @@ def chaseTest(f, RSet, R, isPrint = True):
             matrix[i][R.index(char)] = char.lower()
 
     if isPrint:
-        printMatrix(matrix)
+        printMatrix(matrix, R)
 
-    new_matrix = iterative(matrix, f)
+    new_matrix = iterative(matrix, f, R)
     return True if any([all([len(char) == 1 for char in row]) for row in new_matrix]) else False
 
 if __name__ == "__main__":     

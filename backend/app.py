@@ -39,7 +39,7 @@ def run_algo():
     fp = changeStdOut()
 
     data = request.get_json()
-    if os.getenv('DBMS_CODES_PASSWORD') != data['password']:
+    if os.getenv('DBMS_ALGOS_PASSWORD') != data['password']:
         return 'Cannot run this algorithm'
     
 
@@ -47,48 +47,50 @@ def run_algo():
     R = list(data['R'])
     RSet = list(map(lambda x: list(x), data['RSet'].split(data['fdSeparator'])))
     char = data['char']
-    res = None
+    
+    try:
+        match data['type']:
+            case 'all_candidate_keys':
+                findAllCandidateKeys(f, R)
+            case 'bcnf_decomposition':
+                DecompositionMap[getStringFromSet(R)] = f
+                BCNFDecomposition(f, R, 'R')
+                printDecompositionMap(DecompositionMap)
+            case 'chase_test':
+                print(chaseTest(f, RSet, R))
+            case 'check_3nf':
+                print(check3NF(f, R))
+            case 'check_bcnf':
+                res = checkBCNF(f, R)
+                print(True if res == None else False)
+            case 'dependency_preserving':
+                print('Hence the following decomposition is', ('preserving' if dependencyPreserving(f, RSet, R) else 'not preserving'))
+            case 'exponential_product':
+                rPowerSet = getPowerSet(R)
+                countFds = findFDs(f, R, rPowerSet)
+                printAll(countFds)
+                print('Count => ',len(countFds))
+            case 'fd_restriction':
+                print(FDRestriction(f, R))
+            case 'minimal_cover':
+                resFd = findMinimalCover(f, R, char)
+                printAll(resFd)
+            case 'non_additive_test_bin_decomposition':
+                R1 = set(RSet[0])
+                R2 = set(RSet[1])
+                print(NJTBD(f, R1, R2))
+            case '3nf_synthesis':
+                customMap = {val: val for val in R}
+                res1, res2 = ThreeNFSynthesis(f, R, customMap)
 
-    match data['type']:
-        case 'all_candidate_keys':
-            findAllCandidateKeys(f, R)
-        case 'bcnf_decomposition':
-            DecompositionMap[getStringFromSet(R)] = f
-            BCNFDecomposition(f, R, 'R')
-            printDecompositionMap(DecompositionMap)
-        case 'chase_test':
-            print(chaseTest(f, RSet, R))
-        case 'check_3nf':
-            print(check3NF(f, R))
-        case 'check_bcnf':
-            res = checkBCNF(f, R)
-            print(True if res == None else False)
-        case 'dependency_preserving':
-            print('Hence the following decomposition is', ('preserving' if dependencyPreserving(f, RSet, R) else 'not preserving'))
-        case 'exponential_product':
-            rPowerSet = getPowerSet(R)
-            countFds = findFDs(f, R, rPowerSet)
-            printAll(countFds)
-            print('Count => ',len(countFds))
-        case 'fd_restriction':
-            print(FDRestriction(f, R))
-        case 'minimal_cover':
-            resFd = findMinimalCover(f, R, char)
-            printAll(resFd)
-        case 'non_additive_test_bin_decomposition':
-            R1 = set(RSet[0])
-            R2 = set(RSet[1])
-            print(NJTBD(f, R1, R2))
-        case '3nf_synthesis':
-            customMap = {val: val for val in R}
-            res1, res2 = ThreeNFSynthesis(f, R, customMap)
-
-            print('\nStep 5: The resulting decompositions are: ')
-            for i in range(len(res1)):
-                print('R%s => '%(i + 1),end='')
-                printSetMap(res1[i], customMap, True)
-                print('F{0} => ( {1} )'.format(i+ 1, ', '.join(getPrintMap(res2[i], customMap, None, True))))
-                print()
+                print('\nStep 5: The resulting decompositions are: ')
+                for i in range(len(res1)):
+                    print('R%s => '%(i + 1),end='')
+                    printSetMap(res1[i], customMap, True)
+                    print('F{0} => ( {1} )'.format(i+ 1, ', '.join(getPrintMap(res2[i], customMap, None, True))))
+                    print()
+    except:
+        print('Exception Occured')
 
     fp.flush()
     data = fetchStdOut()
