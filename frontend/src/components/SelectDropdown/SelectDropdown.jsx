@@ -2,7 +2,7 @@ import React from "react";
 
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-const SelectDropdown = (data, setData) => {
+const SelectDropdown = ({ data, setData } = props) => {
   const selectOptions = [
     {
       key: "All Candidate Keys",
@@ -63,7 +63,11 @@ const SelectDropdown = (data, setData) => {
         }}
       >
         {selectOptions.map((option) => {
-          return <MenuItem value={option.value}>{option.key}</MenuItem>;
+          return (
+            <MenuItem key={option.key} value={option.value}>
+              {option.key}
+            </MenuItem>
+          );
         })}
       </Select>
     </FormControl>
